@@ -1,4 +1,9 @@
-from selenium_checks.element import SearchTextElement
+from selenium_checks.element import (
+    SearchTextElement,
+    LOCAL_TITLES,
+    LanguageSelector,
+    wait_for_element
+)
 from selenium_checks.locators import MainPageLocators
 
 
@@ -10,14 +15,44 @@ class BasePage(object):
 class IndexPage(BasePage):
     search_text_element = SearchTextElement()
 
-    def is_title_correct(self):
-        return "Booking.com | Официальный сайт" in self.driver.title
+    def choose_language(self, lang):
+        wait_for_element(
+            self.driver,
+            10,
+            MainPageLocators.LANGUAGE_CHOICE_BUTTON
+        )
+        lang_choice_button = self.driver.find_element(
+            *MainPageLocators.LANGUAGE_CHOICE_BUTTON
+        )
+        lang_choice_button.click()
+
+        language_button_locator = LanguageSelector(
+            lang
+        ).get_xpath_locator()
+
+        wait_for_element(
+            self.driver,
+            10,
+            language_button_locator
+        )
+
+        language_button = self.driver.find_element(
+            *language_button_locator
+        )
+        language_button.click()
+        print('{} language chosen'.format(lang))
+
+    def is_title_correct(self, lang):
+        local_title = LOCAL_TITLES[lang]
+        return "Booking.com | {title}".format(
+            title=local_title
+        ) in self.driver.title
 
     def is_header_buttons_visible(self):
-        element = self.driver.find_element(
+        elem = self.driver.find_element(
             *MainPageLocators.HEADER_BUTTON_BLOCK
         )
-        return element.is_displayed()
+        return elem.is_displayed()
 
     def get_accommodation_button_text(self):
         elem = self.driver.find_element(
@@ -28,9 +63,6 @@ class IndexPage(BasePage):
     def click_go_button(self):
         element = self.driver.find_element(*MainPageLocators.GO_BUTTON)
         element.click()
-
-    def choose_language(self, lang):
-        pass
 
 
 class SearchResultsPage(BasePage):

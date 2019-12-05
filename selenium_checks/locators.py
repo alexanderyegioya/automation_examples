@@ -7,9 +7,16 @@ class MainPageLocators(object):
     HEADER_BUTTON_BLOCK = (By.CLASS_NAME, 'cross-product-bar__wrapper')
     ACCOMMODATION_BUTTON = (
         By.XPATH,
-        ("//*[contains(text(), 'Accommodations')]")
+        "//*[contains(text(), 'Accommodations')]"
     )
-    LANGUAGES_BUTTON = (By.ID, 'b_tt_holder_1')
+    LANGUAGE_CHOICE_BUTTON = (
+        By.XPATH,
+        "//li[contains(@data-id, 'language_selector')]"
+    )
+    language_selector_template = (
+        By.XPATH,
+        "//span[contains(@lang, '{language_code}')]"
+    )
 
 
 class SearchResultsPageLocators(object):

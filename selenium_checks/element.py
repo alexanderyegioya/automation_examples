@@ -1,4 +1,21 @@
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from selenium_checks.locators import MainPageLocators as mp_loc
+
+
+LOCAL_TITLES = {
+    'ru': 'Официальный сайт',
+    'en-us': 'Official site'
+}
+
+
+def wait_for_element(driver, timeout, locator):
+    WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located(
+            locator
+        )
+    )
 
 
 class BasePageElement(object):
@@ -28,3 +45,16 @@ class SearchTextElement(BasePageElement):
 
     # The locator for search box where search string is entered
     locator = 'q'
+
+
+class LanguageSelector():
+    def __init__(self, lang):
+        self.lang = lang
+
+    def get_xpath_locator(self):
+        return (
+            mp_loc.language_selector_template[0],
+            mp_loc.language_selector_template[1].format(
+                language_code=self.lang
+            )
+        )

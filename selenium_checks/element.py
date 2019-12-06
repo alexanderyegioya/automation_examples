@@ -1,12 +1,29 @@
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from selenium_checks.locators import MainPageLocators as mp_loc
 
-
-LOCAL_TITLES = {
-    'ru': 'Официальный сайт',
-    'en-us': 'Official site'
+LOCALIZATION = {
+    'ru': {
+        'title': 'Официальный сайт',
+        'index_page': {
+            'accommodations_button': 'Проживание',
+            'flights_button': 'Авиабилеты',
+            'car_rentals_button': 'Аренда машин',
+            'tours_n_activities_button': 'Экскурсии и развлечения',
+            'airport_taxis_button': 'Такси от/до аэропорта'
+        }
+    },
+    'en-us': {
+        'title': 'Official site',
+        'index_page': {
+            'accommodations_button': 'Accommodations',
+            'flights_button': 'Flights',
+            'car_rentals_button': 'Car Rentals',
+            'tours_n_activities_button': 'Tours & Activities',
+            'airport_taxis_button': 'Airport Taxis'
+        }
+    }
 }
 
 

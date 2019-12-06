@@ -1,6 +1,6 @@
 from selenium_checks.element import (
     SearchTextElement,
-    LOCAL_TITLES,
+    LOCALIZATION,
     LanguageSelector,
     wait_for_element
 )
@@ -43,7 +43,7 @@ class IndexPage(BasePage):
         print('{} language chosen'.format(lang))
 
     def is_title_correct(self, lang):
-        local_title = LOCAL_TITLES[lang]
+        local_title = LOCALIZATION[lang]['title']
         return "Booking.com | {title}".format(
             title=local_title
         ) in self.driver.title
@@ -54,9 +54,9 @@ class IndexPage(BasePage):
         )
         return elem.is_displayed()
 
-    def get_accommodation_button_text(self):
+    def get_button_text(self, locator):
         elem = self.driver.find_element(
-            *MainPageLocators.ACCOMMODATION_BUTTON
+            locator
         )
         return elem.text
 
